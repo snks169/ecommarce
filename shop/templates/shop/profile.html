@@ -1,0 +1,28 @@
+{% extends 'shop/basic.html' %}
+{% block title%} profile{% endblock %}
+{% block body %}
+<div class="container my-4">
+    <h3>
+        Welcome
+        {{request.user.first_name}}
+    </h3>
+    <div class="row">
+    <!-- your profile -->
+    <div class="card mx-2" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Your Profile</h5>
+            <p class="card-text">edit your phone , address, email</p>
+            <a href="#" class="btn btn-primary">edit</a>
+        </div>
+    </div>
+    <!-- your orders  -->
+    <div class="card mx-2" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Your Orders</h5>
+            <p class="card-text"> your orders status </p>
+
+            <a href="/shop/profile/orders" class="btn btn-primary">Orders</a>
+        </div></div>
+    </div>
+</div>
+{% endblock %}

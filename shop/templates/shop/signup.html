@@ -1,0 +1,48 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Sign up {% endblock %}
+{% block body %}
+<div class='container my-4'>
+	{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+</ul>
+{% endif %}
+    <form  action="/shop/signup/" method="POST">{% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputname">First Name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Name" name="firstName" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputname">Last Name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Name" name="lastName" required>
+            </div>
+            
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="abc@xyz.com" name="email" required>
+            </div>
+            
+        </div>
+        
+        <div class="form-group">
+            <label for="inputAddress">Pasword</label>
+            <input type="Password" class="form-control" id="pass1" placeholder="Enter your Password" name="pass1" required>
+        </div>
+        <div class="form-group">
+            <label for="inputAddress">Confirm Pasword</label>
+            <input type="Password" class="form-control" id="pass2" placeholder="Confirm  your Password" name="pass2" required>
+        </div>
+	
+Already User
+ <a href="/shop/signin">
+ 	<button type="button" class='btn btn-primary mx-2'>Login</button></a>
+   
+<button type="submit" class="btn btn-primary mx-4">SignUp</button>
+<br> forget password click here to<a href="/shop/signin/reset-password"> reset</a>
+</form>
+</div>
+</div>
+{% endblock %}

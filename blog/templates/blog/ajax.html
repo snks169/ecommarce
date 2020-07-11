@@ -1,0 +1,64 @@
+ <!doctype html>
+<html lang="en">
+
+<head>
+  {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Ajax in One video</title>
+   
+   
+</head>
+
+<body>
+   
+   <h1>XML AJAX tutorial</h1>
+   <button id ='fetchBtn' class="btn btn-primary" type="button">fatch data</button>
+   <button id ='backupBtn' class="btn btn-secondry" type="button">backup button</button>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <script type="text/javascript" >
+    
+
+    console.log('ajax tutorial in one video')
+
+let fetchBtn = document.getElementById('fetchBtn')
+fetchBtn.addEventListener('click', buttonClickHandler)
+
+function buttonClickHandler(){
+  console.log('fatchBtn')
+
+  const xhr = new XMLHttpRequest();
+  //open the object
+  xhr.open('GET','{% static "blog/harry.txt" %}',true);
+  //      (type of request, 'source', synchronice or asynchronics)
+// for post 
+  xhr.open('POST','{% static "blog/harry.txt" %}',true);
+
+  // what to do on e progress
+  xhr.onprogress = function(){
+    console.log('On progress');
+  }
+  xhr.onload =function(){
+    if(this.status === 200){
+    console.log(this.responseText);
+  }
+  else{
+    console.error('some error occured')
+  }
+  }
+  //send
+  xhr.send();
+} 
+  </script>
+    
+</body>
+
+</html>

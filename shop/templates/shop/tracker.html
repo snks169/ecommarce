@@ -1,0 +1,126 @@
+{% extends 'shop/basic.html' %}
+{% block title%} My Awesome Cart Tracker{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="col my-4">
+        <h2>Enter your Order Id and Email address to track your order</h2>
+        <form method="post" action="#" id="trackerForm">{% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputname">Order Id</label>
+                    <input type="text" class="form-control" id="orderId" name="orderId" placeholder="Order Id">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="mail" name="mail" placeholder="Email">
+                </div>
+                <button type="submit" class="btn btn-primary">Track Order</button>
+            </div>
+    </div>
+</form>
+    <div class="col my-4">
+        <h2>Your Order Status</h2>
+        <div class="my-4">
+            <ul class="list-group" id="items">
+                Enter your order Id and Email and click Track Order to find details about your order!
+            </ul>
+        </div>
+        <div id="ordt">
+            <!-- your order details-->
+        </div>
+        <div class="my-4">
+            <ul class="list-group" id="citems">
+            </ul>
+            <p id="price" class="my-4">
+                <!-- Totle Price -->
+            </p>
+            <p id  = 'address'>
+                <!--address -->
+
+            </p>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
+{% block js %}
+<script>
+$('#trackerForm').submit(function(event) {
+    $('#items').empty();
+    var formData = {
+
+        'orderId': $('input[name=orderId]').val(),
+        'mail': $('input[name=mail]').val(),
+        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+    };
+   
+    $.ajax({
+            type: 'POST',
+            url: '/shop/tracker/',
+            data: formData,
+            encode: true
+        })
+        .done(function(data) {
+            
+            $('#citems').empty();   
+
+
+            data = JSON.parse(data);
+
+            console.log(data)
+
+            if (data['status'] == 'success') {
+                updates = data['updates'];
+                totle_price = data['totlePrice']
+                //console.log(totle_price)
+                for (i = 0; i < updates.length; i++) {
+                    let text = updates[i]['text'];
+                    let time = updates[i]['time'];
+                    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                    ${text}
+                    <span class="badge badge-primary badge-pill">${time}</span>
+                </li>`
+                    $('#items').append(mystr);
+                }
+
+                // Fill in the order details
+                cart = JSON.parse(data['itemsJson']);
+
+
+                for (item in cart) {
+                    let name = cart[item][1];
+                    let qty = cart[item][0];
+                    let rs = cart[item][2];
+                    let id = item.slice(2,4)
+                    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center row">
+                    
+                    
+                    <a href='/shop/shop/products/${id.toString()}'>  ${name} </a>
+                    <span class="badge badge-primary badge-pill text-right">${qty}</span>
+                                        
+                    
+                </li>`
+                    $('#citems').append(mystr);
+                }
+                document.getElementById('ordt').innerHTML = '<h2>Your Order Details</h2>'
+                
+                document.getElementById('price').innerHTML= '<h4>Totle Price : Rs. '+ data['totlePrice'] + ' /-</h4>';
+                document.getElementById('address').innerHTML = "<h5><b>Address- </b>" + data['address'] + " <br><b>City- </b>"+  data['city'] + "<br><b> State- </b>" + data['state'] + "<br><b> Pin code </b>" + data['zip_code'] + "<br><b> Phone no - </b>" + data['phone'] + "</h5> ";
+
+
+
+
+            } else {
+                console.log(data['status'])
+                mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                    Sorry, We are not able to fetch this order id and email. Make sure to type correct order Id and email </li>`
+                $('#items').append(mystr);
+            }
+
+
+
+        });
+    event.preventDefault();
+});
+</script>
+{% endblock %}
