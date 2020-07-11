@@ -7,6 +7,7 @@ admin.site.site_header = 'my awsome cart'
 admin.site.register(Product)
 admin.site.register(Contact)
 admin.site.register(Profile)
+
 @admin.register(Orders)
 class OrdersAdmin(admin.ModelAdmin):
 	list_display = ('order_id','name','email','phone','user' )

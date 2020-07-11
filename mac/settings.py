@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ar97*4s0pri(4%u5+#9kjfrlxi5re7$6)w065^3cg6uq!7_7v8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['www.bgreen.localhost','127.0.0.1','ba9fd5f6ac91.ngrok.io']
 

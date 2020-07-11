@@ -66,6 +66,8 @@ class Profile(models.Model):
 
 
 
-			
-    	
-    		    
+# class  Cart(models.Model):
+# 	item_id= models.AutoField(primary_key=True)
+# 	item = models.OneToOneField(Product, on_delete=models.CASCADE)
+# 	# def __str__(self):
+# 	# 	return self.item
